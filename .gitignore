@@ -28,12 +28,6 @@ ENV/
 
 # IDEs
 .vscode/
-
-# Large video files (>100MB GitHub limit)
-*.mp4
-*.avi
-*.mov
-*.mkv
 .idea/
 *.swp
 *.swo
