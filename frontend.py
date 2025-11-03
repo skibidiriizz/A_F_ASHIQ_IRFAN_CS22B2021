@@ -714,7 +714,7 @@ with tab1:
                 fig.update_xaxes(showgrid=True, gridwidth=1, gridcolor='rgba(148, 163, 184, 0.1)')
                 fig.update_yaxes(showgrid=True, gridwidth=1, gridcolor='rgba(148, 163, 184, 0.1)')
                 
-                st.plotly_chart(fig, width="stretch")
+                st.plotly_chart(fig, use_container_width=True)
             else:
                 st.info(f"⏳ Collecting data for {symbol}... Please wait.")
     
@@ -928,7 +928,7 @@ with tab2:
             fig.update_xaxes(showgrid=True, gridwidth=1, gridcolor='rgba(148, 163, 184, 0.1)')
             fig.update_yaxes(showgrid=True, gridwidth=1, gridcolor='rgba(148, 163, 184, 0.1)')
             
-            st.plotly_chart(fig, width="stretch")
+            st.plotly_chart(fig, use_container_width=True)
         
         # Spread and Z-Score charts
         chart_col1, chart_col2 = st.columns(2)
@@ -972,7 +972,7 @@ with tab2:
                 fig.update_xaxes(showgrid=True, gridwidth=1, gridcolor='rgba(148, 163, 184, 0.1)')
                 fig.update_yaxes(showgrid=True, gridwidth=1, gridcolor='rgba(148, 163, 184, 0.1)')
                 
-                st.plotly_chart(fig, width="stretch")
+                st.plotly_chart(fig, use_container_width=True)
         
         with chart_col2:
             st.markdown("#### Z-Score Analysis")
@@ -1027,7 +1027,7 @@ with tab2:
                 fig.update_xaxes(showgrid=True, gridwidth=1, gridcolor='rgba(148, 163, 184, 0.1)')
                 fig.update_yaxes(showgrid=True, gridwidth=1, gridcolor='rgba(148, 163, 184, 0.1)')
                 
-                st.plotly_chart(fig, width="stretch")
+                st.plotly_chart(fig, use_container_width=True)
         
         # Rolling Correlation
         st.markdown("#### Rolling Correlation & Market Regime")
@@ -1069,7 +1069,7 @@ with tab2:
             fig.update_xaxes(showgrid=True, gridwidth=1, gridcolor='rgba(148, 163, 184, 0.1)')
             fig.update_yaxes(showgrid=True, gridwidth=1, gridcolor='rgba(148, 163, 184, 0.1)')
             
-            st.plotly_chart(fig, width="stretch")
+            st.plotly_chart(fig, use_container_width=True)
         
         st.markdown("<div class='section-divider'></div>", unsafe_allow_html=True)
         
@@ -1216,7 +1216,7 @@ with tab2:
             fig.update_xaxes(showgrid=True, gridwidth=1, gridcolor='rgba(148, 163, 184, 0.1)')
             fig.update_yaxes(showgrid=True, gridwidth=1, gridcolor='rgba(148, 163, 184, 0.1)')
             
-            st.plotly_chart(fig, width="stretch")
+            st.plotly_chart(fig, use_container_width=True)
     
     # Auto-refresh logic
     if auto_refresh:
@@ -1302,7 +1302,7 @@ with tab3:
                     template="plotly_dark"
                 )
                 
-                st.plotly_chart(fig, width="stretch")
+                st.plotly_chart(fig, use_container_width=True)
             else:
                 st.warning("No trades generated. Try adjusting thresholds or wait for more data.")
 
