@@ -1,0 +1,26 @@
+# Trading Analytics Platform - Dependencies
+
+# Core Framework
+streamlit==1.29.0
+
+# Data Processing
+pandas==2.1.3
+numpy==1.26.2
+
+# Visualization
+plotly==5.18.0
+
+# WebSocket & Networking
+websockets==12.0
+
+# Storage
+redis==5.0.1
+
+# Analytics & Statistics
+scipy==1.11.4
+statsmodels==0.14.0
+scikit-learn==1.3.2
+pykalman==0.9.7
+
+# Utilities
+python-dateutil==2.8.2
