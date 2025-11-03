@@ -6,6 +6,16 @@ A comprehensive real-time trading analytics dashboard for statistical arbitrage 
 ![Python](https://img.shields.io/badge/Python-3.9%2B-blue)
 ![License](https://img.shields.io/badge/License-MIT-yellow)
 
+## 📚 Documentation
+
+**Complete documentation is available in the [DOCUMENTATION](DOCUMENTATION/) folder:**
+
+- **[DOCUMENTATION/README.md](DOCUMENTATION/README.md)** - Documentation index and navigation
+- **[DOCUMENTATION/SUBMISSION_README.md](DOCUMENTATION/SUBMISSION_README.md)** - For company reviewers
+- **[DOCUMENTATION/SETUP_GUIDE.md](DOCUMENTATION/SETUP_GUIDE.md)** - Installation and troubleshooting
+- **[DOCUMENTATION/ARCHITECTURE.md](DOCUMENTATION/ARCHITECTURE.md)** - Technical architecture
+- **[DOCUMENTATION/CHATGPT_USAGE.md](DOCUMENTATION/CHATGPT_USAGE.md)** - AI collaboration transparency
+
 ## 🎯 Features
 
 ### Core Functionality
