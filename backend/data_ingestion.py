@@ -53,12 +53,14 @@ class BinanceWebSocketClient:
         url = f"wss://fstream.binance.com/ws/{symbol}@trade"
         
         try:
-            async with websockets.connect(url, ping_interval=20) as ws:
+            async with websockets.connect(url, ping_interval=20, close_timeout=5) as ws:
                 logger.info(f"Connected to {symbol} stream")
                 self.connections.append(ws)
                 
                 async for message in ws:
                     if not self.running:
+                        # Properly close the connection
+                        await ws.close()
                         break
                         
                     try:
@@ -74,8 +76,13 @@ class BinanceWebSocketClient:
                     except Exception as e:
                         logger.error(f"Error processing message: {e}")
                         
+        except websockets.exceptions.ConnectionClosed:
+            # Normal disconnection, no need to log as error
+            logger.info(f"Connection closed for {symbol}")
         except Exception as e:
-            logger.error(f"WebSocket error for {symbol}: {e}")
+            # Only log actual errors
+            if "no close frame received or sent" not in str(e):
+                logger.error(f"WebSocket error for {symbol}: {e}")
         finally:
             logger.info(f"Disconnected from {symbol}")
     

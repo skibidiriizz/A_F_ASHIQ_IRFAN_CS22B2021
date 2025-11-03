@@ -382,8 +382,8 @@ default_symbols = st.sidebar.text_input("Symbols (comma-separated)", "BTCUSDT,ET
 symbols_list = [s.strip().upper() for s in default_symbols.split(',')]
 
 col1, col2 = st.sidebar.columns(2)
-start_btn = col1.button("▶️ Start", use_container_width=True, type="primary")
-stop_btn = col2.button("⏹️ Stop", use_container_width=True)
+start_btn = col1.button("▶️ Start", width="stretch", type="primary")
+stop_btn = col2.button("⏹️ Stop", width="stretch")
 
 if start_btn:
     if not app.running:
@@ -468,7 +468,7 @@ with st.sidebar.expander("➕ Create New Alert", expanded=False):
     if alert_type == 'zscore':
         zscore_threshold = st.number_input("Z-Score Threshold", 1.0, 5.0, 2.0, 0.1,
                                           help="Alert when |z-score| exceeds this value")
-        if st.button("✓ Add Z-Score Alert", use_container_width=True):
+        if st.button("✓ Add Z-Score Alert", width="stretch"):
             app.add_alert_rule('zscore', symbol1=symbol1, symbol2=symbol2, 
                              threshold=zscore_threshold, severity='warning')
             st.success("✓ Alert created!")
@@ -480,7 +480,7 @@ with st.sidebar.expander("➕ Create New Alert", expanded=False):
         price_threshold = st.number_input("Price Threshold", 0.0, 1000000.0, 50000.0, 100.0,
                                          help="Alert when price crosses this level")
         direction = st.radio("Direction", ['above', 'below'], horizontal=True)
-        if st.button("✓ Add Price Alert", use_container_width=True):
+        if st.button("✓ Add Price Alert", width="stretch"):
             app.add_alert_rule('price', symbol=price_symbol, threshold=price_threshold,
                              direction=direction, severity='info')
             st.success("✓ Alert created!")
@@ -489,7 +489,7 @@ with st.sidebar.expander("➕ Create New Alert", expanded=False):
     
     elif alert_type == 'spread':
         spread_threshold = st.number_input("Spread Threshold", 0.0, 10000.0, 100.0, 10.0)
-        if st.button("✓ Add Spread Alert", use_container_width=True):
+        if st.button("✓ Add Spread Alert", width="stretch"):
             app.add_alert_rule('spread', symbol1=symbol1, symbol2=symbol2,
                              threshold=spread_threshold, severity='warning')
             st.success("✓ Alert created!")
@@ -500,7 +500,7 @@ with st.sidebar.expander("➕ Create New Alert", expanded=False):
         vol_symbol = st.selectbox("Symbol", symbols_list, key="vol_alert_symbol")
         spike_threshold = st.slider("Spike Multiplier", 1.5, 10.0, 3.0, 0.5,
                                    help="Alert when volume is X times the average")
-        if st.button("✓ Add Volume Alert", use_container_width=True):
+        if st.button("✓ Add Volume Alert", width="stretch"):
             app.add_alert_rule('volume', symbol=vol_symbol, spike_threshold=spike_threshold,
                              severity='info')
             st.success("✓ Alert created!")
@@ -525,7 +525,7 @@ with st.sidebar.expander("Upload Historical Data"):
     if uploaded_file:
         upload_symbol = st.text_input("Symbol", "BTCUSDT", key="upload_symbol")
         upload_timeframe = st.selectbox("Timeframe", ['1m', '5m', '1h'], key="upload_tf")
-        if st.button("📥 Process Upload", use_container_width=True):
+        if st.button("📥 Process Upload", width="stretch"):
             with st.spinner("Processing..."):
                 if app.upload_ohlc_data(uploaded_file, upload_symbol, upload_timeframe):
                     st.success("✓ Data uploaded!")
@@ -714,7 +714,7 @@ with tab1:
                 fig.update_xaxes(showgrid=True, gridwidth=1, gridcolor='rgba(148, 163, 184, 0.1)')
                 fig.update_yaxes(showgrid=True, gridwidth=1, gridcolor='rgba(148, 163, 184, 0.1)')
                 
-                st.plotly_chart(fig, use_container_width=True)
+                st.plotly_chart(fig, width="stretch")
             else:
                 st.info(f"⏳ Collecting data for {symbol}... Please wait.")
     
@@ -755,7 +755,7 @@ with tab2:
                                    help="Automatically update analytics every 2 seconds")
     
     with control_col2:
-        if st.button("🔍 Compute Analytics", use_container_width=True, type="primary"):
+        if st.button("🔍 Compute Analytics", width="stretch", type="primary"):
             st.rerun()
     
     with control_col3:
@@ -928,7 +928,7 @@ with tab2:
             fig.update_xaxes(showgrid=True, gridwidth=1, gridcolor='rgba(148, 163, 184, 0.1)')
             fig.update_yaxes(showgrid=True, gridwidth=1, gridcolor='rgba(148, 163, 184, 0.1)')
             
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width="stretch")
         
         # Spread and Z-Score charts
         chart_col1, chart_col2 = st.columns(2)
@@ -972,7 +972,7 @@ with tab2:
                 fig.update_xaxes(showgrid=True, gridwidth=1, gridcolor='rgba(148, 163, 184, 0.1)')
                 fig.update_yaxes(showgrid=True, gridwidth=1, gridcolor='rgba(148, 163, 184, 0.1)')
                 
-                st.plotly_chart(fig, use_container_width=True)
+                st.plotly_chart(fig, width="stretch")
         
         with chart_col2:
             st.markdown("#### Z-Score Analysis")
@@ -1027,7 +1027,7 @@ with tab2:
                 fig.update_xaxes(showgrid=True, gridwidth=1, gridcolor='rgba(148, 163, 184, 0.1)')
                 fig.update_yaxes(showgrid=True, gridwidth=1, gridcolor='rgba(148, 163, 184, 0.1)')
                 
-                st.plotly_chart(fig, use_container_width=True)
+                st.plotly_chart(fig, width="stretch")
         
         # Rolling Correlation
         st.markdown("#### Rolling Correlation & Market Regime")
@@ -1069,7 +1069,7 @@ with tab2:
             fig.update_xaxes(showgrid=True, gridwidth=1, gridcolor='rgba(148, 163, 184, 0.1)')
             fig.update_yaxes(showgrid=True, gridwidth=1, gridcolor='rgba(148, 163, 184, 0.1)')
             
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width="stretch")
         
         st.markdown("<div class='section-divider'></div>", unsafe_allow_html=True)
         
@@ -1216,7 +1216,7 @@ with tab2:
             fig.update_xaxes(showgrid=True, gridwidth=1, gridcolor='rgba(148, 163, 184, 0.1)')
             fig.update_yaxes(showgrid=True, gridwidth=1, gridcolor='rgba(148, 163, 184, 0.1)')
             
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width="stretch")
     
     # Auto-refresh logic
     if auto_refresh:
@@ -1276,7 +1276,7 @@ with tab3:
                 
                 st.dataframe(
                     trades_df[['pnl_color', 'entry_time', 'exit_time', 'position', 'entry_price', 'exit_price', 'pnl', 'return_pct']],
-                    use_container_width=True,
+                    width="stretch",
                     height=400
                 )
                 
@@ -1302,7 +1302,7 @@ with tab3:
                     template="plotly_dark"
                 )
                 
-                st.plotly_chart(fig, use_container_width=True)
+                st.plotly_chart(fig, width="stretch")
             else:
                 st.warning("No trades generated. Try adjusting thresholds or wait for more data.")
 
@@ -1346,7 +1346,7 @@ with tab4:
             'Severity': rule.severity
         } for rule in rules]
         
-        st.dataframe(pd.DataFrame(rules_data), use_container_width=True)
+        st.dataframe(pd.DataFrame(rules_data), width="stretch")
     else:
         st.info("No active alert rules.")
 
