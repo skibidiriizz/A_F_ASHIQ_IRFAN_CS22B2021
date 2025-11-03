@@ -144,7 +144,7 @@ class StorageLayer:
             df = pd.read_sql_query(query, conn, params=params)
         
         if not df.empty:
-            df['timestamp'] = pd.to_datetime(df['timestamp'])
+            df['timestamp'] = pd.to_datetime(df['timestamp'], format='mixed')
             df = df.sort_values('timestamp')
         
         return df
@@ -170,7 +170,7 @@ class StorageLayer:
                 data.append(tick)
             
             df = pd.DataFrame(data)
-            df['timestamp'] = pd.to_datetime(df['timestamp'])
+            df['timestamp'] = pd.to_datetime(df['timestamp'], format='mixed')
             return df.sort_values('timestamp')
             
         except Exception as e:
@@ -225,7 +225,7 @@ class StorageLayer:
             df = pd.read_sql_query(query, conn, params=params)
         
         if not df.empty:
-            df['timestamp'] = pd.to_datetime(df['timestamp'])
+            df['timestamp'] = pd.to_datetime(df['timestamp'], format='mixed')
             df = df.set_index('timestamp')
         
         return df

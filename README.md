@@ -97,20 +97,40 @@ This design allows:
 ## 🚀 Quick Start
 
 ### Prerequisites
-- Python 3.9 or higher
-- Redis server (optional but recommended)
+- **Python 3.9 or higher** (Python 3.11+ recommended)
+- **Internet connection** for real-time data
+- **Redis server** (optional but recommended for better performance)
 
 ### Installation
 
-1. **Clone/Download the project**:
+#### Option 1: Quick Start (Windows - Recommended)
+
+1. **Download/Clone the project**
+2. **Double-click `start.bat`** - This will:
+   - Check Python installation
+   - Install all dependencies automatically
+   - Start the dashboard
+
+#### Option 2: Manual Installation (All Platforms)
+
+1. **Navigate to project directory**:
 ```bash
 cd gemscap
 ```
 
 2. **Install dependencies**:
 ```bash
-pip install -r requirements.txt
+# If you encounter timeout errors, use:
+python -m pip install --default-timeout=100 --retries 5 -r requirements.txt
+
+# Or install core packages first:
+pip install streamlit pandas plotly websockets scipy statsmodels scikit-learn
 ```
+
+**Troubleshooting Installation Issues**:
+- **Network Timeout**: Run `install_dependencies.bat` (Windows) for extended timeout
+- **Permission Errors**: Use `python -m pip install --user -r requirements.txt`
+- **Proxy Issues**: Configure pip with `pip config set global.proxy http://your-proxy:port`
 
 3. **Start Redis** (optional, recommended):
 ```bash
@@ -119,16 +139,27 @@ redis-server
 
 # Or use Docker
 docker run -d -p 6379:6379 redis:latest
+
+# Note: The application works fine without Redis (uses SQLite only)
 ```
 
 ### Running the Application
 
-**Single command execution**:
+**Windows**:
 ```bash
-streamlit run frontend.py
+.\start.bat
+# Or
+py -m streamlit run frontend.py
 ```
 
-The dashboard will open in your browser at `http://localhost:8501`
+**Linux/Mac**:
+```bash
+./start.sh
+# Or
+python -m streamlit run frontend.py
+```
+
+The dashboard will automatically open in your browser at `http://localhost:8501`
 
 ### First-Time Usage
 

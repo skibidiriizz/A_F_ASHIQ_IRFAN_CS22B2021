@@ -9,7 +9,7 @@ echo ========================================
 echo.
 
 REM Check Python installation
-python --version >nul 2>&1
+py --version >nul 2>&1
 if errorlevel 1 (
     echo ERROR: Python is not installed or not in PATH
     echo Please install Python 3.9 or higher
@@ -18,15 +18,22 @@ if errorlevel 1 (
 )
 
 echo [1/4] Checking Python version...
-python --version
+py --version
 
 echo.
 echo [2/4] Installing dependencies...
-pip install -r requirements.txt
+echo This may take a few minutes. Please be patient...
+echo.
+py -m pip install --default-timeout=100 --retries 5 -r requirements.txt
 if errorlevel 1 (
-    echo ERROR: Failed to install dependencies
-    pause
-    exit /b 1
+    echo.
+    echo WARNING: Some dependencies failed to install.
+    echo This might be due to network issues or packages already installed.
+    echo.
+    echo Attempting to continue with existing packages...
+    echo If the application fails to start, please run: py -m pip install -r requirements.txt
+    echo.
+    timeout /t 3 /nobreak >nul
 )
 
 echo.
@@ -44,6 +51,6 @@ echo   Press Ctrl+C to stop the application
 echo ========================================
 echo.
 
-streamlit run frontend.py
+py -m streamlit run frontend.py
 
 pause
