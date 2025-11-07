@@ -9,6 +9,10 @@ from scipy import stats
 from statsmodels.tsa.stattools import adfuller
 from pykalman import KalmanFilter
 import logging
+import warnings
+
+# Suppress pandas RuntimeWarnings for NaN operations
+warnings.filterwarnings('ignore', category=RuntimeWarning, module='pandas')
 
 logger = logging.getLogger(__name__)
 
@@ -161,14 +165,29 @@ class AnalyticsEngine:
         Returns:
             Z-score series
         """
+        import warnings
+        
         if len(series) < window:
             return pd.Series(index=series.index, dtype=float)
         
-        rolling_mean = series.rolling(window=window).mean()
-        rolling_std = series.rolling(window=window).std()
+        # Drop NaN values before calculation to avoid runtime warnings
+        series_clean = series.dropna()
+        if len(series_clean) < window:
+            return pd.Series(index=series.index, dtype=float)
         
-        zscore = (series - rolling_mean) / rolling_std
-        return zscore.fillna(0)
+        # Suppress RuntimeWarning for invalid values in subtract
+        with warnings.catch_warnings():
+            warnings.filterwarnings('ignore', category=RuntimeWarning)
+            rolling_mean = series_clean.rolling(window=window).mean()
+            rolling_std = series_clean.rolling(window=window).std()
+            
+            # Avoid division by zero
+            rolling_std = rolling_std.replace(0, np.nan)
+            
+            zscore = (series_clean - rolling_mean) / rolling_std
+            
+        # Reindex to original series and fill NaN with 0
+        return zscore.reindex(series.index).fillna(0)
     
     @staticmethod
     def adf_test(series: pd.Series) -> Dict:

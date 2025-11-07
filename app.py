@@ -170,13 +170,21 @@ class TradingAnalyticsApp:
         Returns:
             Dictionary with all analytics results
         """
+        logger.info(f"=== compute_pair_analytics called ===")
+        logger.info(f"symbol1={symbol1}, symbol2={symbol2}, timeframe={timeframe}, window={window}, use_kalman={use_kalman}")
+        
         try:
             # Get OHLCV data
+            logger.info("Fetching OHLCV data...")
             df1 = self.get_ohlcv_data(symbol1, timeframe, minutes=120)
             df2 = self.get_ohlcv_data(symbol2, timeframe, minutes=120)
             
+            logger.info(f"Analytics: {symbol1} has {len(df1)} bars, {symbol2} has {len(df2)} bars")
+            
             if df1.empty or df2.empty:
-                return {'error': 'Insufficient data'}
+                return {
+                    'error': f'Insufficient data. {symbol1}: {len(df1)} bars, {symbol2}: {len(df2)} bars. Please wait for data collection or start ingestion.'
+                }
             
             # Align timestamps
             df = pd.DataFrame({
@@ -187,7 +195,9 @@ class TradingAnalyticsApp:
             }).dropna()
             
             if len(df) < window:
-                return {'error': f'Need at least {window} data points'}
+                return {
+                    'error': f'Need at least {window} data points, got {len(df)}. Please wait for more data collection.'
+                }
             
             results = {
                 'symbol1': symbol1,
@@ -263,8 +273,10 @@ class TradingAnalyticsApp:
             return results
             
         except Exception as e:
+            import traceback
             logger.error(f"Error computing pair analytics: {e}")
-            return {'error': str(e)}
+            logger.error(f"Traceback: {traceback.format_exc()}")
+            return {'error': f'Computation error: {str(e)}. Check logs for details.'}
     
     def run_backtest(self, symbol1: str, symbol2: str, timeframe: str = '1m',
                     entry_threshold: float = 2.0, exit_threshold: float = 0.0) -> Dict:
